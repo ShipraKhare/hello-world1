@@ -1,5 +1,5 @@
 %let inputDatasetURL =
-  /*https://github.com/jgreene24-stat6250/team-3_project2/blob/master/mar_16.xls?raw=true */
+  /*https://github.com/stat6250/team-3_project2/blob/master/mar_16.xls?raw=true */
   http://filebin.ca/3BljJfFK6653/mar_16.xls
 ;
 
