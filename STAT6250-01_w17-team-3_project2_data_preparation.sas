@@ -23,8 +23,9 @@ run;
 filename BARTtemp clear;
 
 * Build Data Set.  All data fields will be visible and accessed by field name.;
-data bart_ridership_file;
+data barf;
     retain
+        UID
         RM
         EN
         EP
@@ -73,6 +74,7 @@ data bart_ridership_file;
         WS
     ;
     keep
+        UID
         RM
         EN
         EP
