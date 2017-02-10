@@ -19,5 +19,5 @@
 %setup;
 
 
-proc print data=barf (firstobs=6 obs=36);
+proc print data=barf;
 run;
