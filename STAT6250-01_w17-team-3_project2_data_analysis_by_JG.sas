@@ -21,3 +21,6 @@
 
 proc print data=barf;
 run;
+
+proc print data=ho;
+run;
