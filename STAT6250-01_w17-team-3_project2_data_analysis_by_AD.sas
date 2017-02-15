@@ -17,8 +17,6 @@
 	%end;
 %mend;
 %setup;
-
-
 proc print data=barf (firstobs=6 obs=36);
 
 run;
