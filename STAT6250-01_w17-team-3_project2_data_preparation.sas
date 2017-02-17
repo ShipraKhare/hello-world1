@@ -105,7 +105,7 @@
 
 %let homeOriginURL =
   /*https://github.com/stat6250/team-3_project2/blob/master/data/HomeOrigin.xls?raw=true*/
-  http://filebin.ca/3CQ2hb7QD7Cs/HomeOrigin.xls
+  http://www.filebin.ca/3Cfsmz9HsHRU/HomeOrigin.xls
 ;
 
 %let stnNameURL =
@@ -333,6 +333,8 @@ run;
 data ho;
     retain
         UID
+        Code_2
+        Name
         NO_V
         MORE_V
         HIGH_FREQ
@@ -357,6 +359,8 @@ data ho;
     ;
     keep
         UID
+        Code_2
+        Name
         NO_V
         MORE_V
         HIGH_FREQ
