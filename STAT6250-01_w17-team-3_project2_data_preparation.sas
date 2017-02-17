@@ -333,6 +333,8 @@ run;
 data ho;
     retain
         UID
+        Code_2
+        Name
         NO_V
         MORE_V
         HIGH_FREQ
@@ -357,6 +359,8 @@ data ho;
     ;
     keep
         UID
+        Code_2
+        Name
         NO_V
         MORE_V
         HIGH_FREQ
