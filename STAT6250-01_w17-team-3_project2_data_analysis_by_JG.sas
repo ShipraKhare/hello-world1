@@ -1,4 +1,3 @@
-
 %let dataPrepFileName = STAT6250-01_w17-team-3_project2_data_preparation.sas;
 %let sasUEFilePrefix = team-3_project2;
 
