@@ -18,10 +18,9 @@
 %mend;
 %setup;
 
-*proc print data=barf (firstobs=6 obs=36);
 
 *******************************************************************************;
-* Research Question Analysis Starting Point;
+* Research Question Analysis Vehicles/Bart Rider;
 *******************************************************************************;
 *
 Question: Is there is a positive or negative corellation between number of vehicles available 
@@ -41,13 +40,20 @@ DATA rider_ho;
 	SET work.HO;
 RUN;
 
-PROC PRINT data=rider_ho NOOBS obs =10 ;
+PROC 
+
+PROC PRINT data=rider_ho   ;
   
  RUN;
+ 
+ DATA output;
+ set rider_ho;
+ 
+ 
 
 
 *******************************************************************************;
-* Research Question Analysis Starting Point;
+* Research Question Analysis Number of Frequent BART riders;
 *******************************************************************************;
 *
 Question: Find the station which has highest and lowest frequent riders ?
@@ -61,7 +67,7 @@ Methodology:
 ;
 
 *******************************************************************************;
-* Research Question Analysis Starting Point;
+* Research Question Analysis Increase or decrease BART fair;
 *******************************************************************************;
 *
 Question: On an average in the month of March which income category had highest number of riders ?
@@ -73,7 +79,7 @@ Methodology:
 ;
 
 *******************************************************************************;
-* Research Question Analysis Starting Point;
+* Research Question Walkers to BART;
 *******************************************************************************;
 *
 Question: Find the station which has highest number of people walking to station ?
@@ -86,5 +92,3 @@ Methodology:
 
 
 
-
-run;
