@@ -19,6 +19,19 @@
 %setup;
 
 
+data mult_cat;
+    set ho ho ho ho ho ho;
+run;
+
+data interlv;
+    set mar16 mult_cat;
+    by uid;
+run;
+
+
+
+
+
 proc print data=barf;
 run;
 
