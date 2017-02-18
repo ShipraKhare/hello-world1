@@ -35,6 +35,7 @@ See included file for dataset properties
 %mend;
 %setup;
 
+
 proc print data=barf;
 run;
 
@@ -42,6 +43,9 @@ proc print data=ho;
 run;
 
 proc print data=stn;
+run;
+
+proc print data=ebay;
 run;
 
 /* Takes a long time to display because there are so many records. */
@@ -58,9 +62,6 @@ run;
 /* behind the scenes to build your custom SAS data objects.  That  */
 /* kind of use will run faster.                                    */
 proc print data=mar31;
-run;
-
-proc print data=ebay;
 run;
 *******************************************************************************;
 * Research Question Analysis Starting Point;
