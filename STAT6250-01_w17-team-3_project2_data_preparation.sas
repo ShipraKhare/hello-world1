@@ -509,3 +509,7 @@ data ebay;
     ;
     set ebay_raw;
 run;
+
+data jan_mar;
+    set jan1 mar31;
+run;
