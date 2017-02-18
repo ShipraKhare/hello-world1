@@ -40,14 +40,64 @@ DATA rider_ho;
 	SET work.HO;
 RUN;
 
-PROC 
+PROC MEANS DATA=rider_ho NOPRINT MEAN;
+class UID;
+var RM
+        EN
+        EP
+        NB
+        BK
+        AS
+        MA
+        l9
+        l2
+        LM
+        FV
+        CL
+        SL
+        BF
+        HY
+        SH;
+OUTPUT 
+    OUT =  RIDER_MEAN_HO (DROP = _type_ _freq_) mean= median= std= q1= q3= / autoname; 
+run;        
 
-PROC PRINT data=rider_ho   ;
+/* Transpose the data set so that each statistic becomes an observation. */
+proc transpose data=RIDER_MEAN_HO out=out;
+run;
+ 
+/* Create new variables that contain the statistic name and the */
+/* original variable name. */
+ 
+data out1;
+set out;
+varname=scan(_name_,1,'_');
+stat=scan(_name_,2,'_');
+drop _name_;
+run;
+ 
+proc sort data=out1;
+by varname;
+run;
+ 
+/* Transpose the data to get one observation for each  */
+/* original variable name and one variable for each    */
+/* statistic.  This mimics the default printed output. */
+ 
+proc transpose data=out1 out=out2(drop=_name_);
+by varname;
+id stat;
+var col1;
+run;
+ 
+proc print data=out2;
+title 'Looks like default printed output';
+run;
+PROC PRINT data=RIDER_MEAN_HO   ;
   
  RUN;
  
- DATA output;
- set rider_ho;
+
  
  
 
