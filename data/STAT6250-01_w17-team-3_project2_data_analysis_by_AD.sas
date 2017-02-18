@@ -40,7 +40,63 @@ DATA rider_ho;
 	SET work.HO;
 RUN;
 
-PROC MEANS DATA=rider_ho NOPRINT MEAN;
+
+
+PROC PRINT DATA=rider_ho ;
+id NAME;
+sum RM EN
+        EP
+        NB
+        BK
+        AS
+        MA
+        l9
+        l2
+        LM
+        FV
+        CL
+        SL
+        BF
+        HY
+        SH
+        UC
+        FM
+        CN
+        PH
+        WC
+        LF
+        OR
+        RR
+        OW
+        EM
+        MT
+        PL
+        CC
+        l6
+        z4
+        GP
+        BP
+        DC
+        CM
+        CV
+        ED
+        NC
+        WP
+        SS
+        SB
+        SO
+        MB
+        WD
+        OA
+        WS
+;
+RUN;
+
+PROC PRINT data=rider_1   ;
+  
+ RUN;
+ 
+/*PROC MEANS DATA=rider_ho NOPRINT MEAN;
 class UID;
 var RM
         EN
@@ -62,14 +118,19 @@ OUTPUT
     OUT =  RIDER_MEAN_HO (DROP = _type_ _freq_) mean= median= std= q1= q3= / autoname; 
 run;        
 
+
+
 /* Transpose the data set so that each statistic becomes an observation. */
-proc transpose data=RIDER_MEAN_HO out=out;
+/*proc transpose data=RIDER_MEAN_HO out=out;
 run;
+
+PROC PRINT data=RIDER_MEAN_HO   ;
+RUN;
  
 /* Create new variables that contain the statistic name and the */
 /* original variable name. */
  
-data out1;
+/*data out1;
 set out;
 varname=scan(_name_,1,'_');
 stat=scan(_name_,2,'_');
@@ -84,7 +145,7 @@ run;
 /* original variable name and one variable for each    */
 /* statistic.  This mimics the default printed output. */
  
-proc transpose data=out1 out=out2(drop=_name_);
+/*proc transpose data=out1 out=out2(drop=_name_);
 by varname;
 id stat;
 var col1;
