@@ -84,8 +84,8 @@ Methodology:
 * Research Question Analysis Starting Point;
 *******************************************************************************;
 *
-Question:What is the  ratio of male/female ridership load during weekends at Hay
--ward Station?
+Question:Does the male/female ridership significantly changes between first half 
+and second half on a given day for Hayward station?
 
 Rationale:If demographics shows more college age women ride into and out of Hayw
 -ard station, use this as justification for better night lighting. 
