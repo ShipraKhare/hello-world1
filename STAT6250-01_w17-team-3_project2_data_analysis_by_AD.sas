@@ -1,3 +1,17 @@
+*******************************************************************************;
+**************** 80-character banner for column width reference ***************;
+* (set window width to banner width to calibrate line length to 80 characters *;
+*******************************************************************************;
+
+*
+This file uses the following analytic dataset to address several research
+questions regarding ridership data on the Bay Area Rapid Transit system, BART.
+Dataset Name: barf, ho, barf_interlv, arrv created in external file
+STAT6250-01_w17-team-3_project2_data_preparation.sas, which is assumed to be
+in the same directory as this file.
+See included file for dataset properties
+;
+
 %let dataPrepFileName = STAT6250-01_w17-team-3_project2_data_preparation.sas;
 %let sasUEFilePrefix = team-3_project2;
 
@@ -19,6 +33,8 @@
 %setup;
 
 
+
+
 *******************************************************************************;
 * Research Question Analysis Vehicles/Bart Rider;
 *******************************************************************************;
@@ -31,19 +47,12 @@ household change the number of riderships from particular station.
 In future if new stations needs to be opened up the demographic information 
 can be used to evaluate the location.
 
-Note: Corellation analysis between number of passengers and number 
-of passengers with zero vehicles
 
 Methodology: 1. Find the sum of each station
              2.Using proc sql append the total as column
              3.Using the value from percentage of vehicle available at home 
              Vs this column do the regression analysis
 ;
-
-DATA rider_ho;
-	SET work.BARF;
-	SET work.HO;
-RUN;
 
 
 
@@ -97,9 +106,6 @@ sum RM EN
 ;
 RUN;
 
-PROC PRINT data=rider_1   ;
-  
- RUN;
  
 /*PROC MEANS DATA=rider_ho NOPRINT MEAN;
 class UID;
@@ -180,8 +186,6 @@ frequent riders and see if something needs to be improved in that
 station like make it clean, building elevators or other facilities 
 which would help us improve the station in general to increase the frequent riders.
 
-Note:Data visualization
-
 Methodology: 1.PROC GGPLOT between the number of riders in station vs Frequent riders
 ;
 
@@ -194,8 +198,6 @@ Question: On an average in the month of March which income category had highest
  
 Rationale:This would help Bart to increase or decrease the fare in accordance
  with the income category of riders.
-
-Note: Compare and make decision
 
 Methodology: 1. Find the max of number in income category 
              2.Compare the number with less income category
@@ -211,8 +213,6 @@ Question: Find the station which has highest number of people walking to
  
 Rationale:This would help the public transport to introduce more 
 transportation facilities.
-
-Note: derive values and make decision
 
 Methodology: 1.Find the station with highest number of walkers.Again do 
 a max of walkers
