@@ -53,6 +53,12 @@ projections may be presented, reported to congress in annual reports.
 Methodology: 
 ;
 
+proc print data=work.arrv;
+    var hour exit;
+    where hour in (14, 15, 16) and exit in ('MONT', 'EMBR', 'POWL');
+    sum num;
+run;
+
 *******************************************************************************;
 * Research Question Analysis Starting Point;
 *******************************************************************************;
