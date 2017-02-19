@@ -50,7 +50,14 @@ local vendors.
 Note: Extending this analysis to a time series, regression analysis and 
 projections may be presented, reported to congress in annual reports.
 
-Methodology: 
+Methodology: Preprocessing within the data preparation file will sort on
+exit data, creating a nice work.arrv SAS data object upon which one can 
+specify the variables upon which to display.  Using a branch conditional
+(that is an if-then statement) one can then specify hour and station
+of egress.  Summing exits we find the number exiting the most popular
+stations during the time for a Giants baseball game in San Francisco.
+Then we will do the sam thing for a non-ballgame day, and conduct ratio
+analysis.
 ;
 
 proc print data=work.arrv;
@@ -73,7 +80,10 @@ is imortant to know travel loads in order to forecast general maintenance.
 Note: Aggregate entry and exit tracking to answer this question, both sides of 
 the BART system -- San Francisco and East Bay.
 
-Methodology: 
+Methodology: Here we will focus on both EMBR and West Oakland stations, as 
+between these two stations is only the transbay tunnel.  Once calculating
+ridership load between the two stations we can compare loading and capacity
+with respect to morning and evening commute.
 ;
 
 *******************************************************************************;
@@ -87,5 +97,6 @@ Rationale: The beginnings of an analysis of variance.
 
 Note: Eventually would like to build prabability distribution.
 
-Methodology: 
+Methodology: Sorting and using proc means with variance option it will be
+possible to compute the variance between these two stations.
 ;
