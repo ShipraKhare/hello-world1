@@ -35,84 +35,80 @@ See included file for dataset properties
 %mend;
 %setup;
 
-
-proc print data=barf;
-run;
-
-proc print data=ho;
-run;
-
-proc print data=stn;
-run;
-
-proc print data=ebay;
-run;
-
-/* Takes a long time to display because there are so many records. */
-/* It is best not to print this entire table, but use it in procs  */
-/* when creating sub-sets of data.  In other words, use this table */
-/* behind the scenes to build your custom SAS data objects.  That  */
-/* kind of use will run faster.                                    */
-proc print data=jan1;
-run;
-
-/* Takes a long time to display because there are so many records. */
-/* It is best not to print this entire table, but use it in procs  */
-/* when creating sub-sets of data.  In other words, use this table */
-/* behind the scenes to build your custom SAS data objects.  That  */
-/* kind of use will run faster.                                    */
-proc print data=mar31;
-run;
 *******************************************************************************;
 * Research Question Analysis Starting Point;
 *******************************************************************************;
 *
-Question:Find the average ridership load for Saturday for the whole hour of 7pm,
-at Hayward Station? 
+Question:How significantly does the ridership changes in Embercadero station on 
+new year's eve as compare to any normal day?
 
-Rationale:Showing the evening meal ridership usage and can help in targeted adv
--ertizing campaigns for restaurants utilizing social media, and geofencing. 
+Rationale:May help rideshare companies to plan surge and availability of rides 
+based on ridership usage and can help in targeted advertizing campaigns for 
+special events in san Fransisco financial district.
 
-Note:May be extrapulated to other stations. 
-
-Methodology: 
+Methodology: When combining jan1 and mar31 datasets we created in data preperation
+file a new dataset for the Embarcardero station for hourly data for 0,1 and 2 
+hours (1200 hrs,1300 hrs,1400 hrs) for the dates jan 1st and march 31st.Here 
+we use proc mean to calculate mean by DATE and then use proc print to print the 
+mean data for 1st of Jan as Compared to March 31st for the hours 0,1 and 2.
 ;
+ 
+proc means data = jan_mar_EMBR mean NOPRINT;  /*calculating average*/
+by date;
+OUTPUT
+out = jan_mar_EMBR_out (DROP = _TYPE_ _FREQ_ HOUR);
+run; 
 
-
+proc print data = jan_mar_EMBR_out NOOBS;  /*Printing avaerages for both dates*/
+where _STAT_ = 'MEAN';
+run;
 
 
 *******************************************************************************;
 * Research Question Analysis Starting Point;
 *******************************************************************************;
 *
-Question:Does the male/female ridership significantly changes between first half 
-and second half on a given day for Hayward station?
+Question: Does the ridership significantely differs for San Francisco stations
+as compared to the stations in Hayward and Fremont area for a given month?
 
-Rationale:If demographics shows more college age women ride into and out of Hayw
--ard station, use this as justification for better night lighting. 
+Rationale:It would help us understand and plan for proper resources, 
+infrastructure, advertisements and fedral funding allocation for major BART
+Stations. 
 
-Note: CSUEB actively supports security measures for its students
-(Proff. eg :This compares the column "Percent (%) Eligible Free (K-12)" from 
-frpm1415 to the column PCTGE1500 from sat15.)
-
-Methodology: 
-
+Methodology: We picked up 2 clusters of stations on SF and Hayward area from
+the barf dataset. Namely SF stations were EM, MT, PL and CC whereas Fremont 
+stations are HY, SH, UC and FM. Using proc means to calculate the mean riders-
+-ship date for these 2 clusters shows a 10 times more usage in SF area as 
+compated to the Hayward/Fremont BART stations. 
 ;
+
+proc means data = barf mean;      /*calculating averages for two station clusters*/
+var EM MT PL CC HY	SH	UC	FM;
+run; 
 
 
 *******************************************************************************;
 * Research Question Analysis Starting Point;
 *******************************************************************************;
 *
-Question:What total number of people traveling BART from Montgomery to SFO on we
--ekday are do so for reasons of employment? 
+Question:Which station has the highest number of  people traveling BART for 
+reasons of employment? 
 
-Rationale:Provide prospectable ridership locations and number of professionals 
-for Uber drivers to service, and other vendors targeting traveling business people. 
+Rationale: This will help BART streamline job related advertisements on 
+specific station. This data can also be shared with other job sites and
+job related services.  
 
-Note:Service industry really looks to gain from data metrics as such. 
-(This compares the column NUMTSTTAKR from sat15 to the column TOTAL from
-gradaf15.)
-
-Methodology: 
+Methodology: Using the interleaved data "barf_interlv" of "barf" and "HO" 
+from the data preperation file we have sorted the data by workplace variable
+and then used the proc print to print the top BART station with maximum #
+of riders traveling for employmnent. 
 ;
+
+proc sort data = barf_interlv out = barf_interlv_wrkplace_sort ;
+by DESCENDING workplace;       /*Sorting data by descending workplace */
+run;
+
+proc print data = barf_interlv_wrkplace_sort (obs=1); /*printing top station*/
+var Name;
+run;
+
