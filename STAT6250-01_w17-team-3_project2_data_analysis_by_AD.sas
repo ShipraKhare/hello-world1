@@ -55,7 +55,6 @@ Methodology: 1. Find the sum of each station
 ;
 
 
-
 PROC PRINT DATA=rider_ho ;
 id NAME;
 sum RM EN
