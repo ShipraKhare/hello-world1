@@ -637,3 +637,9 @@ run;
 proc sort data=work.sep30 out=work.arrv;
     by exit;
 run;
+
+* Creating data obj specializes on first three hours of day for Embr station;
+data jan_mar_EMBR;            
+    set jan1 mar31;
+    where ENTRY = 'EMBR' and HOUR in (0 1 2);
+run;
