@@ -510,6 +510,21 @@ data ebay;
     set ebay_raw;
 run;
 
+* Vertical concatenation of hourly ridership - for two days of data: January 
+  1st and March 31;
 data jan_mar;
     set jan1 mar31;
+run;
+
+* Vertically stacking observations for Home Origin data in order to match number
+  of observations in Bay Area Ridership File (a.k.a. barf), preprocessing necessary
+  for next data step;
+data mult_cat;
+    set ho ho ho ho ho ho;
+run;
+
+* Horizontal one-to-one merging Home Orgin data with barf data file;
+data barf_interlv;
+    set work.barf;
+    set work.mult_cat;
 run;
