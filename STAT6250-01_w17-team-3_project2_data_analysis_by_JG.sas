@@ -7,9 +7,9 @@
 This file uses the following analytic dataset to address several research
 questions regarding ridership data on the Bay Area Rapid Transit system, BART.
 
-Dataset Name: .....................................created in external file
+Dataset Name: barf, ho, barf_interlv, arrv created in external file
 STAT6250-01_w17-team-3_project2_data_preparation.sas, which is assumed to be
-in the same directory as this file
+in the same directory as this file.
 
 See included file for dataset properties
 ;

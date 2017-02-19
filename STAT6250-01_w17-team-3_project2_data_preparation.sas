@@ -95,6 +95,32 @@
 [Data Dictionary] https://www.bart.gov/sites/default/files/docs/Station_Names.xls
 [Unique ID Schema] UID
 --
+[Dataset 7 Name] sep23_16
+[Dataset Description] Hourly ridership report for Sept. 23, 2016
+[Experimental Unit Description] Number of riders, origin and destination with 
+    respect to hour traveled.
+[Number of Observations] 28,825
+[Number of Features] 5
+[Data Source]  http://64.111.127.166/origin-destination/date-hour-soo-dest-2016.csv.gz
+[Data Dictionary] DATE: date of ride, HOUR: the hour of the ride, ENTRY: station
+    of entry, EXIT: station of exit, NUM: number of riders who traveled from and
+    to.
+[Unique ID Schema] Columns Date, Hour, Entry, and Exit uniquely identify each 
+    observation, as a composit unique ID.
+--
+[Dataset 8 Name] sep30_16
+[Dataset Description] Hourly ridership report for Sept. 30, 2016
+[Experimental Unit Description] Number of riders, origin and destination with 
+    respect to hour traveled.
+[Number of Observations] 28,832
+[Number of Features] 5
+[Data Source]  http://64.111.127.166/origin-destination/date-hour-soo-dest-2016.csv.gz
+[Data Dictionary] DATE: date of ride, HOUR: the hour of the ride, ENTRY: station
+    of entry, EXIT: station of exit, NUM: number of riders who traveled from and
+    to.
+[Unique ID Schema] Columns Date, Hour, Entry, and Exit uniquely identify each 
+    observation, as a composit unique ID.
+--
 ;
 
 * setup environmental parameters;
@@ -123,6 +149,16 @@
   http://filebin.ca/3CQaYKMNsSfI/mar31_16.xls
 ;
 
+%let sep23URL =
+  /*https://github.com/stat6250/team-3_project2/blob/master/data/sep23_16.xls?raw=true */
+    http://filebin.ca/3Csmgwrd3mbm/sep23_16.xls
+;
+
+%let sep30URL =
+  /*https://github.com/stat6250/team-3_project2/blob/master/data/sep30_16.xls?raw=true */
+    http://filebin.ca/3Csn2UX5ultW/sep30_16.xls
+;
+
 %let ebEntryURL =
   /*https://github.com/stat6250/team-3_project2/blob/master/data/Weekday_Entry_Eastbay_2016.xls?raw=true */
   http://filebin.ca/3CQehaxIvEiW/Weekday_Entry_Eastbay_2016.xls
@@ -135,6 +171,8 @@ filename stnName TEMP;
 filename jan1_TMP TEMP;
 filename mr31_TMP TEMP;
 filename ebay_TMP TEMP;
+filename s23_TMP TEMP;
+filename s30_TMP TEMP;
 
 proc http
     method="get" 
@@ -175,6 +213,20 @@ proc http
     method="get" 
     url="&ebEntryURL."
     out=ebay_TMP
+    ;
+run;
+
+proc http
+    method="get" 
+    url="&sep23URL."
+    out=s23_TMP
+    ;
+run;
+
+proc http
+    method="get" 
+    url="&sep30URL."
+    out=s30_TMP
     ;
 run;
 
@@ -220,12 +272,28 @@ proc import
     ;
 run;
 
+proc import
+    file=s23_TMP
+    out=s23_raw
+    dbms=xls
+    ;
+run;
+
+proc import
+    file=s30_TMP
+    out=s30_raw
+    dbms=xls
+    ;
+run;
+
 filename mar16 clear;
 filename hOrgTEMP clear;
 filename stnName clear;
 filename jan1_TMP clear;
 filename mr31_TMP clear;
 filename ebay_TMP clear;
+filename s23_TMP clear;
+filename s30_TMP clear;
 
 * Build Data Set.  All data fields will be visible and accessed by field name.;
 data barf;
@@ -510,6 +578,42 @@ data ebay;
     set ebay_raw;
 run;
 
+data sep23;
+    retain
+        DATE
+        HOUR
+        ENTRY
+        EXIT
+        NUM
+    ;
+    keep
+        DATE
+        HOUR
+        ENTRY
+        EXIT
+        NUM
+    ;
+    set s23_raw;
+run;
+
+data sep30;
+    retain
+        DATE
+        HOUR
+        ENTRY
+        EXIT
+        NUM
+    ;
+    keep
+        DATE
+        HOUR
+        ENTRY
+        EXIT
+        NUM
+    ;
+    set s30_raw;
+run;
+
 * Vertical concatenation of hourly ridership - for two days of data: January 
   1st and March 31;
 data jan_mar;
@@ -527,4 +631,9 @@ run;
 data barf_interlv;
     set work.barf;
     set work.mult_cat;
+run;
+
+* Sorting BART arrival data during a Giants baseball game;
+proc sort data=work.sep30 out=work.arrv;
+    by exit;
 run;
