@@ -54,12 +54,9 @@ Methodology: 1. Find the sum of each station
              Vs this column do the regression analysis
 ;
 
-
-PROC PRINT DATA= barf_interlv ;
-id NAME;
-sum RM EN
-        EP
-        NB
+proc means data=barf_interlv  mean ; 
+    id NAME;
+    var  RM EN EP NB
         BK
         AS
         MA
@@ -101,76 +98,19 @@ sum RM EN
         MB
         WD
         OA
-        WS
-;
-RUN;
-
- 
-/*PROC MEANS DATA=rider_ho NOPRINT MEAN;
-class UID;
-var RM
-        EN
-        EP
-        NB
-        BK
-        AS
-        MA
-        l9
-        l2
-        LM
-        FV
-        CL
-        SL
-        BF
-        HY
-        SH;
-OUTPUT 
-    OUT =  RIDER_MEAN_HO (DROP = _type_ _freq_) 
-    mean= median= std= q1= q3= / autoname; 
-run;        
-
-
-
-/* Transpose the data set so that each statistic becomes an observation. */
-/*proc transpose data=RIDER_MEAN_HO out=out;
+        ;
+    output 
+    out =  BART_MEAN_RIDERS (DROP = _TYPE_ _FREQ_); 
 run;
 
-PROC PRINT data=RIDER_MEAN_HO   ;
-RUN;
- 
-/* Create new variables that contain the statistic name and the */
-/* original variable name. */
- 
-/*data out1;
-set out;
-varname=scan(_name_,1,'_');
-stat=scan(_name_,2,'_');
-drop _name_;
-run;
- 
-proc sort data=out1;
-by varname;
-run;
- 
-/* Transpose the data to get one observation for each  */
-/* original variable name and one variable for each    */
-/* statistic.  This mimics the default printed output. */
- 
-/*proc transpose data=out1 out=out2(drop=_name_);
-by varname;
-id stat;
-var col1;
-run;
- 
-proc print data=out2;
-title 'Looks like default printed output';
-run;
-PROC PRINT data=RIDER_MEAN_HO   ;
-  
- RUN;
- 
+title "Using SGPLOT to Produce a Histogram";
 
- 
+proc sgplot data=barf_interlv ;
+
+   histogram NO_V;
+
+run;
+
  
 
 
@@ -188,6 +128,22 @@ which would help us improve the station in general to increase the frequent ride
 Methodology: 1.PROC GGPLOT between the number of riders in station vs Frequent riders
 ;
 
+
+
+
+title "Linear Regression Model for High frequency riders from Richmond";
+
+proc reg data= barf_interlv;
+
+   model RM = HIGH_FREQ;
+
+run;
+
+quit;
+
+
+
+
 *******************************************************************************;
 * Research Question Analysis Increase or decrease BART fair;
 *******************************************************************************;
@@ -203,6 +159,19 @@ Methodology: 1. Find the max of number in income category
              3.Infer based on comparison
 ;
 
+title "Histogram of High Income riders";
+
+proc univariate data=barf_interlv;
+
+   id NAME;
+
+   var  EN  I_V_HIGH;
+
+   histogram;
+
+   probplot / normal(mu=est sigma=est);
+
+run;
 *******************************************************************************;
 * Research Question Walkers to BART;
 *******************************************************************************;
@@ -218,5 +187,12 @@ a max of walkers
              2.Find the station and infer based on results
 ;
 
+title "Scatter Plot for People walking to Bart in Walnut Creek Station ";
+
+proc sgplot data = barf_interlv;
+
+scatter x = WC  y = Walk;
+
+run;
 
 
