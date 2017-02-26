@@ -125,7 +125,7 @@
 
 * setup environmental parameters;
 %let mar16DatasetURL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/mar_16.xls?raw=true */
+  /*https://github.com/stat6250/team-3_project2/blob/master/data/mar_16.xls?raw=true*/
   http://filebin.ca/3BljJfFK6653/mar_16.xls
 ;
 
@@ -135,32 +135,32 @@
 ;
 
 %let stnNameURL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/Station_Names.xls?raw=true */
+  /*https://github.com/stat6250/team-3_project2/blob/master/data/Station_Names.xls?raw=true*/
   http://filebin.ca/3CqVKzJN9RWB/Station_Names.xls
 ;
 
 %let jan1URL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/Jan1_16.xls?raw=true */
+  /*https://github.com/stat6250/team-3_project2/blob/master/data/Jan1_16.xls?raw=true*/
   http://filebin.ca/3CQT37enXRRb/Jan1_16.xls
 ;
 
 %let mar31URL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/mar31_16.xls?raw=true */
+  /*https://github.com/stat6250/team-3_project2/blob/master/data/mar31_16.xls?raw=true*/
   http://filebin.ca/3CQaYKMNsSfI/mar31_16.xls
 ;
 
 %let sep23URL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/sep23_16.xls?raw=true */
+  /*https://github.com/stat6250/team-3_project2/blob/master/data/sep23_16.xls?raw=true*/
     http://filebin.ca/3Csmgwrd3mbm/sep23_16.xls
 ;
 
 %let sep30URL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/sep30_16.xls?raw=true */
+  /*https://github.com/stat6250/team-3_project2/blob/master/data/sep30_16.xls?raw=true*/
     http://filebin.ca/3Csn2UX5ultW/sep30_16.xls
 ;
 
 %let ebEntryURL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/Weekday_Entry_Eastbay_2016.xls?raw=true */
+  /*https://github.com/stat6250/team-3_project2/blob/master/data/Weekday_Entry_Eastbay_2016.xls?raw=true*/
   http://filebin.ca/3CQehaxIvEiW/Weekday_Entry_Eastbay_2016.xls
 ;
 
