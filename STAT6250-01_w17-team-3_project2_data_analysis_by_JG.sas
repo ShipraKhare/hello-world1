@@ -61,8 +61,8 @@ analysis.
 ;
 
 proc print data=work.arrv;
-    var hour exit;
-    where hour in (14, 15, 16) and exit in ('MONT', 'EMBR', 'POWL');
+    var exit hour;
+    where exit in ('MONT', 'EMBR', 'POWL') and hour in (14, 15, 16);
     sum num;
 run;
 
@@ -78,13 +78,32 @@ Rationale: As the transbay tunnel is the single nexis within the BART system it
 is imortant to know travel loads in order to forecast general maintenance.
 
 Note: Aggregate entry and exit tracking to answer this question, both sides of 
-the BART system -- San Francisco and East Bay.
+the BART system -- San Francisco and East Bay.  Morning rush hour: 7-9am.
+Evening rush hour: 4-6pm.
 
 Methodology: Here we will focus on both EMBR and West Oakland stations, as 
 between these two stations is only the transbay tunnel.  Once calculating
 ridership load between the two stations we can compare loading and capacity
 with respect to morning and evening commute.
 ;
+
+data work.m_rush (drop=date entry exit hour);
+    set work.arrv;
+    where exit in ('MONT', 'EMBR') and hour in (7, 8, 9);
+    angie+num;
+run;
+
+proc print data=work.m_rush noobs;
+    sum num;
+run;
+
+
+
+
+
+proc freq data=work.m_rush;
+    tables num;
+run;
 
 *******************************************************************************;
 * Research Question Analysis Starting Point;
