@@ -633,6 +633,14 @@ data barf_interlv;
     set work.mult_cat;
 run;
 
+proc sort data = barf_interlv out = barf_interlv_wrkplace_sort ;
+    by DESCENDING workplace;       /*Sorting data by descending workplace */
+run;
+
+proc sort data = barf_interlv out = barf_interlv_SH ;
+    by DESCENDING SH;       /*Sorting data by descending South Hayward Station */
+run;
+
 * Sorting BART arrival data during a Giants baseball game;
 proc sort data=work.sep30 out=work.arrv;
     by exit;
