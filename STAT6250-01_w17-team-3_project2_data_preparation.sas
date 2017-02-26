@@ -643,15 +643,15 @@ proc sort data = barf_interlv out = barf_interlv_SH ;
     by DESCENDING SH;
 run;
 
-* Sorting BART arrival data during a Giants baseball game;
-proc sort data=work.sep30 out=work.arrv;
-    by exit;
-run;
-
 * Creating data obj specializes on first three hours of day for Embr station;
 data jan_mar_EMBR;            
     set jan1 mar31;
     where ENTRY = 'EMBR' and HOUR in (0 1 2);
+run;
+
+* Sorting BART arrival data during a Giants baseball game;
+proc sort data=work.sep30 out=work.arrv;
+    by exit;
 run;
 
 * The next proc sort and two data steps create a SAS data object which represent
