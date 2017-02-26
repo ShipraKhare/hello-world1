@@ -87,22 +87,8 @@ ridership load between the two stations we can compare loading and capacity
 with respect to morning and evening commute.
 ;
 
-data work.m_rush (drop=date entry exit hour);
-    set work.arrv;
-    where exit in ('MONT', 'EMBR') and hour in (7, 8, 9);
-    angie+num;
-run;
-
-proc print data=work.m_rush noobs;
-    sum num;
-run;
-
-
-
-
-
-proc freq data=work.m_rush;
-    tables num;
+proc print data=work.m_rush(keep=exit tot_num) noobs;
+    sum tot_num;
 run;
 
 *******************************************************************************;
