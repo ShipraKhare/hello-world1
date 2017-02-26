@@ -633,12 +633,14 @@ data barf_interlv;
     set work.mult_cat;
 run;
 
+* Sorting data by descending workplace;
 proc sort data = barf_interlv out = barf_interlv_wrkplace_sort ;
-    by DESCENDING workplace;       /*Sorting data by descending workplace */
+    by DESCENDING workplace;
 run;
 
+* Sorting data by descending South Hayward Station;
 proc sort data = barf_interlv out = barf_interlv_SH ;
-    by DESCENDING SH;       /*Sorting data by descending South Hayward Station */
+    by DESCENDING SH;
 run;
 
 * Sorting BART arrival data during a Giants baseball game;
@@ -650,4 +652,22 @@ run;
 data jan_mar_EMBR;            
     set jan1 mar31;
     where ENTRY = 'EMBR' and HOUR in (0 1 2);
+run;
+
+* The next proc sort and two data steps create a SAS data object which represent
+  the number of people exiting BART during the morning weekday rush hour in the 
+  financial district, San Francisco;
+proc sort data=work.sep30 out=work.temp_a;
+    by exit hour;
+run;
+data work.f_dist_stns_rush;
+    set work.temp_a;
+    where exit in ('MONT', 'EMBR') and hour in (7, 8, 9);
+run;
+data work.m_rush;
+    set work.f_dist_stns_rush;
+    by exit hour;
+    if first.exit then tot_num=0;
+    tot_num+num;
+    if last.exit and last.hour;
 run;
