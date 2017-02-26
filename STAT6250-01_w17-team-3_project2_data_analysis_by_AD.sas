@@ -55,8 +55,7 @@ Methodology: 1. Find the sum of each station
 ;
 
 
-
-PROC PRINT DATA=rider_ho ;
+PROC PRINT DATA= barf_interlv ;
 id NAME;
 sum RM EN
         EP

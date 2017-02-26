@@ -59,8 +59,10 @@ OUTPUT
 out = jan_mar_EMBR_out (DROP = _TYPE_ _FREQ_ HOUR);
 run; 
 
-proc print data = jan_mar_EMBR_out NOOBS;  /*Printing avaerages for both dates*/
+proc print data = jan_mar_EMBR_out noobs label;  /*Printing averages for both dates*/
 where _STAT_ = 'MEAN';
+label _STAT_ = "Measure";
+label NUM = "Average Ridership";
 run;
 
 
@@ -76,14 +78,22 @@ infrastructure, advertisements and fedral funding allocation for major BART
 Stations. 
 
 Methodology: We picked up 2 clusters of stations on SF and Hayward area from
-the barf dataset. Namely SF stations were EM, MT, PL and CC whereas Fremont 
+the barf_interlv dataset. Namely SF stations were EM, MT, PL and CC whereas Fremont 
 stations are HY, SH, UC and FM. Using proc means to calculate the mean riders-
 -ship date for these 2 clusters shows a 10 times more usage in SF area as 
-compated to the Hayward/Fremont BART stations. 
+compared to the Hayward/Fremont BART stations. 
 ;
 
-proc means data = barf mean;      /*calculating averages for two station clusters*/
+proc means data = barf_interlv mean; /*calculating mean for 2 station clusters*/
 var EM MT PL CC HY	SH	UC	FM;
+label EM = "Embarcadero( SFO station)";
+label MT = "Montgomery (SFO Station)" ;
+label PL = "Powell Street (SFO Station)";
+label CC = "Civic Center( SFO Station)";
+label HY = "Hayward (Fremont Station)";
+label SH = "south Hayward (Fremont station)";
+label UC = "Union City ( Fremont Station)";
+label FM = "Fremont (Fremont Station)";
 run; 
 
 
@@ -91,8 +101,8 @@ run;
 * Research Question Analysis Starting Point;
 *******************************************************************************;
 *
-Question:Which station has the highest number of  people traveling BART for 
-reasons of employment? 
+Question:Which station has the highest bart ridership for the reason of workplace
+and what are the top two destinations of their work?
 
 Rationale: This will help BART streamline job related advertisements on 
 specific station. This data can also be shared with other job sites and
@@ -101,14 +111,17 @@ job related services.
 Methodology: Using the interleaved data "barf_interlv" of "barf" and "HO" 
 from the data preperation file we have sorted the data by workplace variable
 and then used the proc print to print the top BART station with maximum #
-of riders traveling for employmnent. 
+of riders traveling for work.And then sorting the data to get the top station
+where the people are going for work. 
 ;
 
-proc sort data = barf_interlv out = barf_interlv_wrkplace_sort ;
-by DESCENDING workplace;       /*Sorting data by descending workplace */
+proc print data = barf_interlv_wrkplace_sort (obs=1) label; /*print top station*/
+var Name;
+label Name = "Top Station with work ridership";
 run;
 
-proc print data = barf_interlv_wrkplace_sort (obs=1); /*printing top station*/
+proc print data = barf_interlv_SH (obs=2) label; /*print 2 top station for SH*/
 var Name;
+label Name = " Top destinations for workplace";
 run;
 
