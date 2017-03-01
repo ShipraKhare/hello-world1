@@ -156,7 +156,7 @@ footnote bcolor=antiquewhite bold underlin=1
 "Top two destinations for workplace comute using bart are Embarcadero and Montgomary."
 ;
 
-proc print data = barf_interlv_SH (obs=2) label;/* top 2 stations for South Hayward*/
+proc print data = barf_interlv_SH (obs=2) label;/* top 2 exit stations */
 var Name;
 label Name = " Top destinations for workplace";
 run;
