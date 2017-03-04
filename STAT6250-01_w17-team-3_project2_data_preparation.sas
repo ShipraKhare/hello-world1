@@ -125,7 +125,7 @@
 
 * setup environmental parameters;
 %let mar16DatasetURL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/mar_16.xls?raw=true */
+  /*https://github.com/stat6250/team-3_project2/blob/master/data/mar_16.xls?raw=true*/
   http://filebin.ca/3BljJfFK6653/mar_16.xls
 ;
 
@@ -135,32 +135,32 @@
 ;
 
 %let stnNameURL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/Station_Names.xls?raw=true */
+  /*https://github.com/stat6250/team-3_project2/blob/master/data/Station_Names.xls?raw=true*/
   http://filebin.ca/3CqVKzJN9RWB/Station_Names.xls
 ;
 
 %let jan1URL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/Jan1_16.xls?raw=true */
+  /*https://github.com/stat6250/team-3_project2/blob/master/data/Jan1_16.xls?raw=true*/
   http://filebin.ca/3CQT37enXRRb/Jan1_16.xls
 ;
 
 %let mar31URL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/mar31_16.xls?raw=true */
+  /*https://github.com/stat6250/team-3_project2/blob/master/data/mar31_16.xls?raw=true*/
   http://filebin.ca/3CQaYKMNsSfI/mar31_16.xls
 ;
 
 %let sep23URL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/sep23_16.xls?raw=true */
+  /*https://github.com/stat6250/team-3_project2/blob/master/data/sep23_16.xls?raw=true*/
     http://filebin.ca/3Csmgwrd3mbm/sep23_16.xls
 ;
 
 %let sep30URL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/sep30_16.xls?raw=true */
+  /*https://github.com/stat6250/team-3_project2/blob/master/data/sep30_16.xls?raw=true*/
     http://filebin.ca/3Csn2UX5ultW/sep30_16.xls
 ;
 
 %let ebEntryURL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/Weekday_Entry_Eastbay_2016.xls?raw=true */
+  /*https://github.com/stat6250/team-3_project2/blob/master/data/Weekday_Entry_Eastbay_2016.xls?raw=true*/
   http://filebin.ca/3CQehaxIvEiW/Weekday_Entry_Eastbay_2016.xls
 ;
 
@@ -633,12 +633,20 @@ data barf_interlv;
     set work.mult_cat;
 run;
 
+* Sorting data by descending workplace;
 proc sort data = barf_interlv out = barf_interlv_wrkplace_sort ;
-    by DESCENDING workplace;       /*Sorting data by descending workplace */
+    by DESCENDING workplace;
 run;
 
+* Sorting data by descending South Hayward Station;
 proc sort data = barf_interlv out = barf_interlv_SH ;
-    by DESCENDING SH;       /*Sorting data by descending South Hayward Station */
+    by DESCENDING SH;
+run;
+
+* Creating data obj specializes on first three hours of day for Embr station;
+data jan_mar_EMBR;            
+    set jan1 mar31;
+    where ENTRY = 'EMBR' and HOUR in (0 1 2);
 run;
 
 * Sorting BART arrival data during a Giants baseball game;
@@ -646,8 +654,20 @@ proc sort data=work.sep30 out=work.arrv;
     by exit;
 run;
 
-* Creating data obj specializes on first three hours of day for Embr station;
-data jan_mar_EMBR;            
-    set jan1 mar31;
-    where ENTRY = 'EMBR' and HOUR in (0 1 2);
+* The next proc sort and two data steps create a SAS data object which represent
+  the number of people exiting BART during the morning weekday rush hour in the 
+  financial district, San Francisco;
+proc sort data=work.sep30 out=work.temp_a;
+    by exit hour;
+run;
+data work.f_dist_stns_rush;
+    set work.temp_a;
+    where exit in ('MONT', 'EMBR') and hour in (7, 8, 9);
+run;
+data work.m_rush;
+    set work.f_dist_stns_rush;
+    by exit hour;
+    if first.exit then tot_num=0;
+    tot_num+num;
+    if last.exit and last.hour;
 run;
