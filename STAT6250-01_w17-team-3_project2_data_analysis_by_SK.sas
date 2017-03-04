@@ -82,7 +82,7 @@ footnote;
 * Research Question Analysis Starting Point;
 *******************************************************************************;
 title1
-" Question: Does the ridership significantely differs for San Francisco stations as compared to the stations in Hayward and Fremont area for a given month?"
+" Research Question: Does the ridership significantely differs for San Francisco stations as compared to the stations in Hayward and Fremont area for a given month?"
 ;
 
 title2
@@ -125,7 +125,7 @@ footnote;
 *******************************************************************************;
 
 title1
-"Question:Which station has the highest bart ridership for the reason of workplace and what are the top two destinations of their work?"
+" Research Question:Which station has the highest bart ridership for the reason of workplace and what are the top two destinations of their work?"
 ;
 
 title2
