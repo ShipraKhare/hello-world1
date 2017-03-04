@@ -133,7 +133,7 @@ title2
 ;
 
 footnote bcolor=antiquewhite bold underlin=1
-" South Hayward is the station with highest rideship for people who use bart for Workplace. "
+" South Hayward is the station with highest ridership for people who use bart for Workplace. "
 ;
 
 *
