@@ -38,14 +38,24 @@ See included file for dataset properties
 *******************************************************************************;
 * Research Question Analysis Starting Point;
 *******************************************************************************;
+
+title1 
+"Research Question:How significantly does the ridership changes in Embercadero station on new year's eve as compare to any normal day?"
+;
+
+title2
+"Rationale:This should help rideshare companies to plan surge and availability of rides and plan targeted advertizing campaigns for special events in SFO financial district."
+;
+
+footnote1 bcolor=antiquewhite bold underlin=1
+" Average ridership during event hours for Embercadero station on normal day Vs New year's evening."
+;
+
+footnote2 bcolor=antiquewhite bold underlin=1
+"Ridership on special events has a very significant rise as compared to any normal day."
+;
+
 *
-Question:How significantly does the ridership changes in Embercadero station on 
-new year's eve as compare to any normal day?
-
-Rationale:May help rideshare companies to plan surge and availability of rides 
-based on ridership usage and can help in targeted advertizing campaigns for 
-special events in san Fransisco financial district.
-
 Methodology: When combining jan1 and mar31 datasets we created in data preperation
 file a new dataset for the Embarcardero station for hourly data for 0,1 and 2 
 hours (1200 hrs,1300 hrs,1400 hrs) for the dates jan 1st and march 31st.Here 
@@ -65,18 +75,29 @@ label _STAT_ = "Measure";
 label NUM = "Average Ridership";
 run;
 
+title;
+footnote;
 
 *******************************************************************************;
 * Research Question Analysis Starting Point;
 *******************************************************************************;
+title1
+" Research Question: Does the ridership significantely differs for San Francisco stations as compared to the stations in Hayward and Fremont area for a given month?"
+;
+
+title2
+"Rationale:It would help us understand and plan for proper resources,infrastructure, advertisements and fedral funding allocation for major BART Stations."
+;
+
+footnote1 bcolor=antiquewhite bold underlin=1
+" Stations in the SFO area shows very high avarage rideship as compare to stations in Fremont. "
+;
+
+footnote2 bcolor=antiquewhite bold underlin=1
+" Very high amount of people uses bart for comute to SFO and back as compare to any other area. "
+;
+
 *
-Question: Does the ridership significantely differs for San Francisco stations
-as compared to the stations in Hayward and Fremont area for a given month?
-
-Rationale:It would help us understand and plan for proper resources, 
-infrastructure, advertisements and fedral funding allocation for major BART
-Stations. 
-
 Methodology: We picked up 2 clusters of stations on SF and Hayward area from
 the barf_interlv dataset. Namely SF stations were EM, MT, PL and CC whereas Fremont 
 stations are HY, SH, UC and FM. Using proc means to calculate the mean riders-
@@ -84,7 +105,7 @@ stations are HY, SH, UC and FM. Using proc means to calculate the mean riders-
 compared to the Hayward/Fremont BART stations. 
 ;
 
-proc means data = barf_interlv mean; /*calculating mean for 2 station clusters*/
+proc means data = barf_interlv mean ; /*calculating mean for 2 station clusters*/
 var EM MT PL CC HY	SH	UC	FM;
 label EM = "Embarcadero( SFO station)";
 label MT = "Montgomery (SFO Station)" ;
@@ -96,18 +117,26 @@ label UC = "Union City ( Fremont Station)";
 label FM = "Fremont (Fremont Station)";
 run; 
 
+title;
+footnote;
 
 *******************************************************************************;
 * Research Question Analysis Starting Point;
 *******************************************************************************;
+
+title1
+" Research Question:Which station has the highest bart ridership for the reason of workplace and what are the top two destinations of their work?"
+;
+
+title2
+" Rationale: This will help BART streamline job related advertisements on specific station. This data can also be shared with other job sites and job related services."  
+;
+
+footnote bcolor=antiquewhite bold underlin=1
+" South Hayward is the station with highest ridership for people who use bart for Workplace. "
+;
+
 *
-Question:Which station has the highest bart ridership for the reason of workplace
-and what are the top two destinations of their work?
-
-Rationale: This will help BART streamline job related advertisements on 
-specific station. This data can also be shared with other job sites and
-job related services.  
-
 Methodology: Using the interleaved data "barf_interlv" of "barf" and "HO" 
 from the data preperation file we have sorted the data by workplace variable
 and then used the proc print to print the top BART station with maximum #
@@ -120,8 +149,17 @@ var Name;
 label Name = "Top Station with work ridership";
 run;
 
-proc print data = barf_interlv_SH (obs=2) label; /*print 2 top station for SH*/
+title;
+footnote;
+
+footnote bcolor=antiquewhite bold underlin=1
+"Top two destinations for workplace comute using bart are Embarcadero and Montgomary."
+;
+
+proc print data = barf_interlv_SH (obs=2) label;/* top 2 exit stations */
 var Name;
 label Name = " Top destinations for workplace";
 run;
+
+footnote;
 
