@@ -125,43 +125,43 @@
 
 * setup environmental parameters;
 %let mar16DatasetURL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/mar_16.xls?raw=true*/
-  http://filebin.ca/3BljJfFK6653/mar_16.xls
+  https://github.com/stat6250/team-3_project2/blob/master/data/mar_16.xls?raw=true
+  /*http://filebin.ca/3BljJfFK6653/mar_16.xls*/
 ;
 
 %let homeOriginURL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/HomeOrigin.xls?raw=true*/
-  http://filebin.ca/3CqUplYkveQw/HomeOrigin.xls
+  https://github.com/stat6250/team-3_project2/blob/master/data/HomeOrigin.xls?raw=true
+  /*http://filebin.ca/3CqUplYkveQw/HomeOrigin.xls*/
 ;
 
 %let stnNameURL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/Station_Names.xls?raw=true*/
-  http://filebin.ca/3CqVKzJN9RWB/Station_Names.xls
+  https://github.com/stat6250/team-3_project2/blob/master/data/Station_Names.xls?raw=true
+  /*http://filebin.ca/3CqVKzJN9RWB/Station_Names.xls*/
 ;
 
 %let jan1URL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/Jan1_16.xls?raw=true*/
-  http://filebin.ca/3CQT37enXRRb/Jan1_16.xls
+  https://github.com/stat6250/team-3_project2/blob/master/data/Jan1_16.xls?raw=true
+  /*http://filebin.ca/3CQT37enXRRb/Jan1_16.xls*/
 ;
 
 %let mar31URL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/mar31_16.xls?raw=true*/
-  http://filebin.ca/3CQaYKMNsSfI/mar31_16.xls
+  https://github.com/stat6250/team-3_project2/blob/master/data/mar31_16.xls?raw=true
+  /*http://filebin.ca/3CQaYKMNsSfI/mar31_16.xls*/
 ;
 
 %let sep23URL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/sep23_16.xls?raw=true*/
-    http://filebin.ca/3Csmgwrd3mbm/sep23_16.xls
+  https://github.com/stat6250/team-3_project2/blob/master/data/sep23_16.xls?raw=true
+    /*http://filebin.ca/3Csmgwrd3mbm/sep23_16.xls*/
 ;
 
 %let sep30URL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/sep30_16.xls?raw=true*/
-    http://filebin.ca/3Csn2UX5ultW/sep30_16.xls
+  https://github.com/stat6250/team-3_project2/blob/master/data/sep30_16.xls?raw=true
+    /*http://filebin.ca/3Csn2UX5ultW/sep30_16.xls*/
 ;
 
 %let ebEntryURL =
-  /*https://github.com/stat6250/team-3_project2/blob/master/data/Weekday_Entry_Eastbay_2016.xls?raw=true*/
-  http://filebin.ca/3CQehaxIvEiW/Weekday_Entry_Eastbay_2016.xls
+  https://github.com/stat6250/team-3_project2/blob/master/data/Weekday_Entry_Eastbay_2016.xls?raw=true
+  /*http://filebin.ca/3CQehaxIvEiW/Weekday_Entry_Eastbay_2016.xls*/
 ;
 
 * Loading raw datafile via Internet;
@@ -653,6 +653,10 @@ run;
 proc sort data=work.sep30 out=work.arrv;
     by exit;
 run;
+* Sorting BART arrival data during Giants baseball off season;
+proc sort data=work.mar31 out=work.arrv_off;
+    by exit;
+run;
 
 * The next proc sort and two data steps create a SAS data object which represent
   the number of people exiting BART during the morning weekday rush hour in the 
@@ -664,10 +668,71 @@ data work.f_dist_stns_rush;
     set work.temp_a;
     where exit in ('MONT', 'EMBR') and hour in (7, 8, 9);
 run;
+
+data work.f_dist_stns_rush_pm;
+    set work.temp_a;
+    where exit in ('MONT', 'EMBR') and hour in (16, 17, 18);
+run;
+
+data work.civic_center_am_rush;
+    set work.temp_a;
+    where exit in ('CIVC') and hour in (7, 8, 9);
+run;
+
+data work.merge_am_rush;
+    set work.f_dist_stns_rush work.civic_center_am_rush;
+run;
+
+* Creates a SAS data set which represents the number of people exiting    ;
+* the Montgomery and Embarcadaro BART stations on a typical work day, AM. ;
 data work.m_rush;
     set work.f_dist_stns_rush;
     by exit hour;
     if first.exit then tot_num=0;
     tot_num+num;
     if last.exit and last.hour;
+run;
+
+* Creates a SAS data set which represents the number of people exiting    ;
+* the Montgomery and Embarcadaro BART stations on a typical work day, PM. ;
+data work.pm_rush;
+    set work.f_dist_stns_rush_pm;
+    by exit hour;
+    if first.exit then tot_num=0;
+    tot_num+num;
+    if last.exit and last.hour;
+run;
+
+* The next three data steps incrementally collate merge and calculate percent;
+* change.  These four data steps are candidates for data step consolidation,;
+* but for now they work together and should be considered a unit.           ;
+data pop_avg_off;
+    set work.arrv_off;
+    by hour;
+    where exit in ('MONT', 'EMBR', 'POWL') and hour in (14);
+    do;
+        no_game_ridership+num;
+    end;
+    if last.hour then
+    do;
+        output;
+    end;
+run;
+data pop_avg_game;
+    set work.arrv;
+    by hour;
+    where exit in ('MONT', 'EMBR', 'POWL') and hour in (14);
+    do;
+        game_ridership+num;
+    end;
+    if last.hour then
+    do;
+        output;
+    end;
+run;
+data match_merge_records;
+    set pop_avg_game;
+    set pop_avg_off;
+    prcnt_chng = ((game_ridership - no_game_ridership)/no_game_ridership) * 100;
+    keep prcnt_chng;
 run;
