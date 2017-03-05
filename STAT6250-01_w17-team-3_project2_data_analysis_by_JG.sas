@@ -2,7 +2,6 @@
 **************** 80-character banner for column width reference ***************;
 * (set window width to banner width to calibrate line length to 80 characters *;
 *******************************************************************************;
-
 *
 This file uses the following analytic dataset to address several research
 questions regarding ridership data on the Bay Area Rapid Transit system, BART.
