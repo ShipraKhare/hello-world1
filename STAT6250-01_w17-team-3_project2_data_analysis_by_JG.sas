@@ -21,21 +21,22 @@ See included file for dataset properties
 
 %macro setup;
 %if
-	&SYSSCP. = WIN
+    &SYSSCP. = WIN
 %then
-	%do;
-		X "cd ""%substr(%sysget(SAS_EXECFILEPATH),1,%eval(%length(%sysget(SAS_EXECFILEPATH))-%length(%sysget(SAS_EXECFILENAME))))""";			
-		%include ".\&dataPrepFileName.";
-	%end;
+    %do;
+        X "cd ""%substr(%sysget(SAS_EXECFILEPATH),1,%eval(%length(%sysget(SAS_EXECFILEPATH))-%length(%sysget(SAS_EXECFILENAME))))""";           
+        %include ".\&dataPrepFileName.";
+    %end;
 %else
-	%do;
-		%include "~/&sasUEFilePrefix./&dataPrepFileName.";
-	%end;
+    %do;
+        %include "~/&sasUEFilePrefix./&dataPrepFileName.";
+    %end;
 %mend;
 %setup;
 
-
-
+*IL: consider spell checking your titles/footnotes;
+*IL: consider not numbering research questions;
+*IL: consider moving methodology to after titles/footnotes;
 *******************************************************************************;
 * Research Question 1                                                          ;
 *******************************************************************************;
@@ -49,10 +50,14 @@ stations during the time for a Giants baseball game in San Francisco.
 Then we will do the same thing for a non-ballgame day, and conduct ratio
 analysis, percent change in risership.
 ;
-
-title1 "Research Question: Does the ridership significantly differ during a downtown baseball game at ATT Park during a Giants game, with respect to an evening when there is no game?";
+*IL: putting long sting literals on their own line;
+title1
+"Research Question: Does the ridership significantly differ during a downtown baseball game at ATT Park during a Giants game, with respect to an evening when there is no game?"
+;
 title2 "This should help identify projections for economic opportunity, local vendors.";
-footnote1 bcolor=aquamarine bold underlin=1 "This study measures percent change in arrival ridership from the three San Francisco financial district BART stations, an hour before the opening pitch.  Game started at 3:15 PM, BART station arrival time for the entire 2 o'clock hour.";
+footnote1 bcolor=aquamarine bold underlin=1
+"This study measures percent change in arrival ridership from the three San Francisco financial district BART stations, an hour before the opening pitch.  Game started at 3:15 PM, BART station arrival time for the entire 2 o'clock hour."
+;
 footnote2 bcolor=aquamarine bold underlin=1 "Game day: September 30, 2016.  Control day: March 31, 2016";
 
 proc print data=work.match_merge_records noobs;
@@ -76,7 +81,7 @@ title2 "Rationale: As the transbay tunnel is the single nexis within the BART sy
 title3 "Percent change from morning to evening commute, BART San Francisco financial district stations.";
 footnote1 bcolor=aquamarine bold underlin=1 "Aggregate entry and exit tracking to answer this question, both sides of the BART system -- San Francisco and East Bay.";
 footnote2 bcolor=aquamarine bold underlin=1 "Morning rush hour: 7-9am.  Evening rush hour: 4-6pm.";
-
+*IL: consider moving the data step to data-prep;
 data compare_am_pm_rush;
     merge work.m_rush (rename=(tot_num=am_tot_num)) work.pm_rush (rename=(tot_num=pm_tot_num));
     percent_change = ((pm_tot_num-am_tot_num)/am_tot_num)*100;
@@ -101,7 +106,7 @@ title1 "What is the standard deviation of ridership between Civic Center Station
 title2 "Rationale: The beginnings of an analysis of variance.";
 title3 "Eventually would like to build prabability distribution.";
 footnote1 bcolor=aquamarine bold underlin=1 "This analysis shows the great variagion between government employees headed to work at city hall and the private sector workers who head to their offices in S.F. financial district.";
-
+*IL: consider specifying a five-number summary;
 proc means data=work.civic_center_am_rush;
 run;
 

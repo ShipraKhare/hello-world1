@@ -22,16 +22,16 @@ See included file for dataset properties
 
 %macro setup;
 %if
-	&SYSSCP. = WIN
+    &SYSSCP. = WIN
 %then
-	%do;
-		X "cd ""%substr(%sysget(SAS_EXECFILEPATH),1,%eval(%length(%sysget(SAS_EXECFILEPATH))-%length(%sysget(SAS_EXECFILENAME))))""";			
-		%include ".\&dataPrepFileName.";
-	%end;
+    %do;
+        X "cd ""%substr(%sysget(SAS_EXECFILEPATH),1,%eval(%length(%sysget(SAS_EXECFILEPATH))-%length(%sysget(SAS_EXECFILENAME))))""";           
+        %include ".\&dataPrepFileName.";
+    %end;
 %else
-	%do;
-		%include "~/&sasUEFilePrefix./&dataPrepFileName.";
-	%end;
+    %do;
+        %include "~/&sasUEFilePrefix./&dataPrepFileName.";
+    %end;
 %mend;
 %setup;
 
@@ -54,7 +54,7 @@ footnote1 bcolor=antiquewhite bold underlin=1
 footnote2 bcolor=antiquewhite bold underlin=1
 "Ridership on special events has a very significant rise as compared to any normal day."
 ;
-
+*IL: wrap comments at 80 characters;
 *
 Methodology: When combining jan1 and mar31 datasets we created in data preperation
 file a new dataset for the Embarcardero station for hourly data for 0,1 and 2 
@@ -62,11 +62,11 @@ hours (1200 hrs,1300 hrs,1400 hrs) for the dates jan 1st and march 31st.Here
 we use proc mean to calculate mean by DATE and then use proc print to print the 
 mean data for 1st of Jan as Compared to March 31st for the hours 0,1 and 2.
 ;
- 
+*IL: use indentation to show code structure; 
+*IL: be consistent with capitalization;
 proc means data = jan_mar_EMBR mean NOPRINT;  /*calculating average*/
-by date;
-OUTPUT
-out = jan_mar_EMBR_out (DROP = _TYPE_ _FREQ_ HOUR);
+    by date;
+    OUTPUT out = jan_mar_EMBR_out (DROP = _TYPE_ _FREQ_ HOUR);
 run; 
 
 proc print data = jan_mar_EMBR_out noobs label;  /*Printing averages for both dates*/
@@ -106,9 +106,20 @@ compared to the Hayward/Fremont BART stations.
 ;
 
 proc means data = barf_interlv mean ; /*calculating mean for 2 station clusters*/
-var EM MT PL CC HY	SH	UC	FM;
-label EM = "Embarcadero( SFO station)";
-label MT = "Montgomery (SFO Station)" ;
+    var
+        EM
+        MT
+        PL
+        CC
+        HY
+        SH
+        UC
+        FM
+    ;
+    label
+        EM = "Embarcadero( SFO station)"
+        MT = "Montgomery (SFO Station)"
+    ;
 label PL = "Powell Street (SFO Station)";
 label CC = "Civic Center( SFO Station)";
 label HY = "Hayward (Fremont Station)";
