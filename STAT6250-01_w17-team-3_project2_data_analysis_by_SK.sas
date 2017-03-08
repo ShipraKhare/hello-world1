@@ -56,6 +56,7 @@ footnote2 bcolor=antiquewhite bold
 ;
 
 footnote3 bcolor=antiquewhite bold 
+"Since Embercadero is the last bart station in SFO , the ridership rises 9 times more during special events in SFO e;g new year's eve."
 ;
 
 *
