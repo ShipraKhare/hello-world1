@@ -7,9 +7,9 @@
 This file uses the following analytic dataset to address several research
 questions regarding Bart Ridership in bay area.
 
-Dataset Name: <datset name> created in external file
-STAT6250-01_w17-team-3_project2_data_preparation.sas, which is assumed to be
-in the same directory as this file
+Dataset Name:<jan_mar_EMBR> , <barf_interlv> & <barf_interlv_wrkplace_sort> 
+created in external file STAT6250-01_w17-team-3_project2_data_preparation.sas,
+which is assumed to be in the same directory as this file
 
 See included file for dataset properties
 ;
@@ -35,9 +35,9 @@ See included file for dataset properties
 %mend;
 %setup;
 
-*******************************************************************************;
+******************************************************************************;
 * Research Question Analysis Starting Point;
-*******************************************************************************;
+******************************************************************************;
 
 title1 
 "Research Question:How significantly does the ridership changes in Embercadero station on new year's eve as compare to any normal day?"
@@ -51,28 +51,34 @@ footnote1 bcolor=antiquewhite bold underlin=1
 " Average ridership during event hours for Embercadero station on normal day Vs New year's evening."
 ;
 
-footnote2 bcolor=antiquewhite bold underlin=1
-"Ridership on special events has a very significant rise as compared to any normal day."
+footnote2 bcolor=antiquewhite bold 
+"Ridership has a very significant rise as compared to any normal day during special events at SFO ."
+;
+
+footnote3 bcolor=antiquewhite bold 
 ;
 
 *
-Methodology: When combining jan1 and mar31 datasets we created in data preperation
-file a new dataset for the Embarcardero station for hourly data for 0,1 and 2 
-hours (1200 hrs,1300 hrs,1400 hrs) for the dates jan 1st and march 31st.Here 
+Methodology: When combining jan1 and mar31 datasets in data preperation file we
+created a new dataset for the Embarcardero station for hourly data for 0,1 and
+2 hours (1200 hrs,1300 hrs,1400 hrs) for the dates jan 1st and march 31st.Here 
 we use proc mean to calculate mean by DATE and then use proc print to print the 
 mean data for 1st of Jan as Compared to March 31st for the hours 0,1 and 2.
 ;
- 
-proc means data = jan_mar_EMBR mean NOPRINT;  /*calculating average*/
-by date;
-OUTPUT
-out = jan_mar_EMBR_out (DROP = _TYPE_ _FREQ_ HOUR);
+
+/*calculating average ridership by date for Embercardero station*/ 
+proc means data = jan_mar_EMBR mean noprint;  
+    by date;
+	output out = jan_mar_EMBR_out (DROP = _TYPE_ _FREQ_ HOUR);
 run; 
 
-proc print data = jan_mar_EMBR_out noobs label;  /*Printing averages for both dates*/
-where _STAT_ = 'MEAN';
-label _STAT_ = "Measure";
-label NUM = "Average Ridership";
+/*Printing averages for both dates*/
+proc print data = jan_mar_EMBR_out noobs label;  
+    where _STAT_ = 'MEAN';
+    label 
+        _STAT_= "Measure"
+         NUM  = "Average Ridership"
+    ;
 run;
 
 title;
@@ -99,22 +105,33 @@ footnote2 bcolor=antiquewhite bold underlin=1
 
 *
 Methodology: We picked up 2 clusters of stations on SF and Hayward area from
-the barf_interlv dataset. Namely SF stations were EM, MT, PL and CC whereas Fremont 
-stations are HY, SH, UC and FM. Using proc means to calculate the mean riders-
--ship date for these 2 clusters shows a 10 times more usage in SF area as 
+the barf_interlv dataset. Namely SF stations were EM, MT, PL and CC whereas 
+Fremont stations are HY, SH, UC and FM. Using proc means to calculate the mean
+ridership date for these 2 clusters shows a 10 times more usage in SF area as 
 compared to the Hayward/Fremont BART stations. 
 ;
-
-proc means data = barf_interlv mean ; /*calculating mean for 2 station clusters*/
-var EM MT PL CC HY	SH	UC	FM;
-label EM = "Embarcadero( SFO station)";
-label MT = "Montgomery (SFO Station)" ;
-label PL = "Powell Street (SFO Station)";
-label CC = "Civic Center( SFO Station)";
-label HY = "Hayward (Fremont Station)";
-label SH = "south Hayward (Fremont station)";
-label UC = "Union City ( Fremont Station)";
-label FM = "Fremont (Fremont Station)";
+/*Calculating Average ridership for 2 station clusters for comarision. */
+proc means data = barf_interlv mean ; 
+     var 
+        EM 
+        MT 
+        PL 
+        CC 
+        HY	
+        SH	
+        UC	
+        FM
+      ;
+    label 
+        EM = "Embarcadero( SFO station)"
+        MT = "Montgomery (SFO Station)" 
+        PL = "Powell Street (SFO Station)"
+        CC = "Civic Center( SFO Station)"
+        HY = "Hayward (Fremont Station)"
+        SH = "south Hayward (Fremont station)"
+        UC = "Union City ( Fremont Station)"
+        FM = "Fremont (Fremont Station)"
+      ;
 run; 
 
 title;
@@ -144,9 +161,14 @@ of riders traveling for work.And then sorting the data to get the top station
 where the people are going for work. 
 ;
 
-proc print data = barf_interlv_wrkplace_sort (obs=1) label; /*print top station*/
-var Name;
-label Name = "Top Station with work ridership";
+/*print top station with highest bart ridership for the reason of work.*/
+proc print data = barf_interlv_wrkplace_sort (obs=1) label; 
+    var 
+        Name
+    ;
+    label 
+        Name = "Top Station with work ridership"
+    ;
 run;
 
 title;
@@ -156,9 +178,14 @@ footnote bcolor=antiquewhite bold underlin=1
 "Top two destinations for workplace comute using bart are Embarcadero and Montgomary."
 ;
 
-proc print data = barf_interlv_SH (obs=2) label;/* top 2 exit stations */
-var Name;
-label Name = " Top destinations for workplace";
+/* Top 2 exit stations for workplace ridership  */
+proc print data = barf_interlv_SH (obs=2) label;
+    var 
+       Name
+    ;
+    label 
+       Name = " Top destinations for workplace"
+    ;
 run;
 
 footnote;
