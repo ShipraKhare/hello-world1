@@ -703,7 +703,7 @@ data work.pm_rush;
     if last.exit and last.hour;
 run;
 
-* The next three data steps incrementally collate merge and calculate percent;
+* The next four data steps incrementally collate merge and calculate percent;
 * change.  These four data steps are candidates for data step consolidation,;
 * but for now they work together and should be considered a unit.           ;
 data pop_avg_off;
@@ -735,4 +735,9 @@ data match_merge_records;
     set pop_avg_off;
     prcnt_chng = ((game_ridership - no_game_ridership)/no_game_ridership) * 100;
     keep prcnt_chng;
+run;
+data compare_am_pm_rush;
+    merge work.m_rush (rename=(tot_num=am_tot_num)) work.pm_rush (rename=(tot_num=pm_tot_num));
+    percent_change = ((pm_tot_num-am_tot_num)/am_tot_num)*100;
+    keep exit percent_change;
 run;

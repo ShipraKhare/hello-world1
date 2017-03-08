@@ -76,12 +76,6 @@ title3 "Percent change from morning to evening commute, BART San Francisco finan
 footnote1 bcolor=aquamarine bold underlin=1 "Aggregate entry and exit tracking to answer this question, both sides of the BART system -- San Francisco and East Bay.";
 footnote2 bcolor=aquamarine bold underlin=1 "Morning rush hour: 7-9am.  Evening rush hour: 4-6pm.";
 
-data compare_am_pm_rush;
-    merge work.m_rush (rename=(tot_num=am_tot_num)) work.pm_rush (rename=(tot_num=pm_tot_num));
-    percent_change = ((pm_tot_num-am_tot_num)/am_tot_num)*100;
-    keep exit percent_change;
-run;
-
 proc print data=work.compare_am_pm_rush noobs;
 run;
 
