@@ -47,7 +47,7 @@ title2
 "Rationale:This should help rideshare companies to plan surge and availability of rides and plan targeted advertizing campaigns for special events in SFO financial district."
 ;
 
-footnote1 bcolor=antiquewhite bold underlin=1
+footnote1 bcolor=antiquewhite 
 " Average ridership during event hours for Embercadero station on normal day Vs New year's evening."
 ;
 
@@ -73,7 +73,7 @@ proc means data = jan_mar_EMBR mean noprint;
 	output out = jan_mar_EMBR_out (DROP = _TYPE_ _FREQ_ HOUR);
 run; 
 
-/*Printing averages for both dates*/
+/*Printing averages for rideship load for both dates*/
 proc print data = jan_mar_EMBR_out noobs label;  
     where _STAT_ = 'MEAN';
     label 
@@ -96,12 +96,16 @@ title2
 "Rationale:It would help us understand and plan for proper resources,infrastructure, advertisements and fedral funding allocation for major BART Stations."
 ;
 
-footnote1 bcolor=antiquewhite bold underlin=1
-" Stations in the SFO area shows very high avarage rideship as compare to stations in Fremont. "
+footnote1 bcolor=antiquewhite 
+" Stations in the SFO area shows very high average rideship as compare to stations in Fremont cluster. "
 ;
 
-footnote2 bcolor=antiquewhite bold underlin=1
-" Very high amount of people uses bart for comute to SFO and back as compare to any other area. "
+footnote2 bcolor=antiquewhite 
+" Very high amount of people uses bart for comute to SFO and back as compare to Freomont.High figures for SFO stations justify the reality that SFO being a tourist place , people take bart more often to commute to SFO."
+;
+
+footnote3 bcolor=antiquewhite 
+"On the other hand , Fremont being a residential community people use bart less to commute to fremont and back."
 ;
 
 *
@@ -111,6 +115,7 @@ Fremont stations are HY, SH, UC and FM. Using proc means to calculate the mean
 ridership date for these 2 clusters shows a 10 times more usage in SF area as 
 compared to the Hayward/Fremont BART stations. 
 ;
+
 /*Calculating Average ridership for 2 station clusters for comarision. */
 proc means data = barf_interlv mean ; 
      var 
@@ -150,8 +155,8 @@ title2
 " Rationale: This will help BART streamline job related advertisements on specific station. This data can also be shared with other job sites and job related services."  
 ;
 
-footnote bcolor=antiquewhite bold underlin=1
-" South Hayward is the station with highest ridership for people who use bart for Workplace. "
+footnote bcolor=antiquewhite 
+" With the resulted figures, South Hayward is the station with highest ridership for people who use bart for Workplace. This needs a further investigation on which stations does this polpulation exit when using bart."
 ;
 
 *
@@ -175,8 +180,12 @@ run;
 title;
 footnote;
 
-footnote bcolor=antiquewhite bold underlin=1
-"Top two destinations for workplace comute using bart are Embarcadero and Montgomary."
+footnote1 bcolor=antiquewhite 
+"Results reflected that the top two destinations for people using Bart for workplace comute are Embarcadero and Montgomary."
+;
+
+footnote2 bcolor=antiquewhite
+"This also give weights to the earlier investigations, where SFO stations were found to have highest exit ridership ."
 ;
 
 /* Top 2 exit stations for workplace ridership  */
