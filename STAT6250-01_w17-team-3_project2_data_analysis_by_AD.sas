@@ -97,7 +97,7 @@ RUN;
 PROC PRINT 
 	DATA= TEMP_MEAN_LOW_FREQ NOOBS LABEL ;
     WHERE _STAT_ = 'MAX';
-    LABEL _STAT_ = 'Maximum number of low frequency riders';
+    LABEL _STAT_ = 'Maximum percentage of low frequency riders';
     BY _STAT_;
 RUN;
 	
@@ -121,7 +121,7 @@ walking to the BART station"
 ;
 
 *
-Methodology: Use PROC MEANS to calculate the max value of walkers to BART
+Methodology: Use PROC MEANS to calculate the max percentages of walkers to BART
 ;
 
 PROC MEANS 
@@ -135,7 +135,7 @@ RUN;
 PROC PRINT 
 	DATA=TEMP_WALK_MEAN NOOBS LABEL ;
     WHERE _STAT_ = 'MAX';
-    LABEL _STAT_ = 'Maximum number of walkers to Bart station';
+    LABEL _STAT_ = 'Maximum percentage of walkers to Bart station';
     BY _STAT_;
 RUN;
 	
