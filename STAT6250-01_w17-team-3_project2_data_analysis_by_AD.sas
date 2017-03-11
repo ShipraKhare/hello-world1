@@ -16,7 +16,6 @@ See included file for dataset properties
 %let sasUEFilePrefix = team-3_project2;
 
 
-
 %macro setup;
 %if
 	&SYSSCP. = WIN
@@ -32,173 +31,116 @@ See included file for dataset properties
 %mend;
 %setup;
 
-
-
-
 *******************************************************************************;
-* Research Question Analysis Vehicles/Bart Rider;
+* Research Question Correlation analysis between  percentage of riders
+   with no vehicle and percentage of high frequency riders;
 *******************************************************************************;
-*******************************************************************************; 
-title1 "Research Question: Is there is a positive or negative corellation between number of 
-vehicles available in household Vs number of riderships in a station ?";
-
-title2 "Rationale:This would help us to find if number of vehicle available in 
-household change the number of riderships from particular station. 
-In future if new stations needs to be opened up the demographic information 
-can be used to evaluate the location.";
-
-footnote1 "shows the histogram of bart riders vs percentage of vehicles available at home";
-
-*
-Methodology: 1. Find the sum of each station
-             2.Using proc sql append the total as column
-             3.Using the value from percentage of vehicle available at home 
-             Vs this column do the regression analysis
+title1 "Research Question: For each station is there is a correlation between
+the percentage of riders with no vehicle and percentage of high frequency riders"
 ;
 
-proc means data=barf_interlv  mean ; 
-    id NAME;
-    var  RM EN EP NB
-        BK
-        AS
-        MA
-        l9
-        l2
-        LM
-        FV
-        CL
-        SL
-        BF
-        HY
-        SH
-        UC
-        FM
-        CN
-        PH
-        WC
-        LF
-        OR
-        RR
-        OW
-        EM
-        MT
-        PL
-        CC
-        l6
-        z4
-        GP
-        BP
-        DC
-        CM
-        CV
-        ED
-        NC
-        WP
-        SS
-        SB
-        SO
-        MB
-        WD
-        OA
-        ;
-    output 
-    out =  BART_MEAN_RIDERS (DROP = _TYPE_ _FREQ_); 
-run;
+title2 "Rationale:This would help us to find if the percentage of riders with no
+vehicle are also part of high frequency riders"
+;
 
-proc sgplot data=barf_interlv ;
+footnote1 " The output shows a very weak positive correlation of 0.08 between percentage
+of riders with no vehicles taking bart and percentage of high frequency riders who
+are taking bart in each station"
+;
 
-   histogram NO_V;
+*
+Methodology: This uses a proc corr to find the correlation between percentage
+of riders with no vehicles and percentage of high frequency riders who
+are taking bart in each station"
+;
 
-run;
+PROC CORR 
+	DATA = barf_interlv;
+	VAR NO_V HIGH_FREQ;
+RUN;
 
- 
 title;
 footnote;
 
+
 *******************************************************************************;
-* Research Question Analysis Number of Frequent BART riders;
+* Research Question Analysis Find the stations with minimum and maximum percentage
+   of low frequency riders;
 *******************************************************************************;
 
-title1 "Research Question: Find the station which has highest and lowest frequent riders ?";
+title1 "Research Question: Find the stations which has the highest percentage 
+of low frequency riders ?"
+;
 
 title2 "Rationale:This would help the business to see where there are less 
 frequent riders and see if something needs to be improved in that 
 station like make it clean, building elevators or other facilities 
-which would help us improve the station in general to increase the frequent riders.";
-
-footnote "Linear Regression Model for High frequency riders from Richmond";
-
-*
-Methodology: 1.PROC GGPLOT between the number of riders in station vs Frequent riders
+which would help us improve the station in general to increase the frequent riders."
 ;
 
-
-proc reg data= barf_interlv;
-
-   model RM = HIGH_FREQ;
-
-run;
-
-title;
-footnote;
-
-
-
-
-*******************************************************************************;
-* Research Question Analysis Increase or decrease BART fair;
-*******************************************************************************;
-
-title1 "Research Question: On an average in the month of March which income category had highest
- number of riders ?";
- 
-title2 "Rationale:This would help Bart to increase or decrease the fare in accordance
- with the income category of riders.";
-
-footnote1 "histogram of high income riders from El Cerrito del Norte station ";
-*
-Methodology: 1. Find the max of number in income category 
-             2.Compare the number with less income category
-             3.Infer based on comparison
+footnote1 "The above tables shows that Dublin/Pleasonton station has highest percentage 
+of low frequency rider"
 ;
 
-proc univariate data=barf_interlv;
+*
+Methodology: 1.PROC MEANS to find min and max values 
+;
 
-   id NAME;
+PROC MEANS 
+	DATA=barf_interlv NOPRINT MEAN;
+	ID name;
+	VAR LOW_FREQ;
+	OUTPUT 
+    OUT =  TEMP_MEAN_LOW_FREQ (DROP = _TYPE_ _FREQ_  NAME); 
+RUN;
 
-   var  EN  I_V_HIGH;
-
-   histogram;
-
-   probplot / normal(mu=est sigma=est);
-
-run;
+PROC PRINT 
+	DATA= TEMP_MEAN_LOW_FREQ NOOBS LABEL ;
+    WHERE _STAT_ = 'MAX';
+    LABEL _STAT_ = 'Maximum number of low frequency riders';
+    BY _STAT_;
+RUN;
+	
 title;
 footnote;
 
 *******************************************************************************;
-* Research Question Walkers to BART;
+* Research Question highest percentage of walkers to BART;
 *******************************************************************************;
 
-title1 "Research Question: Find the station which has highest number of people walking to
- station ?";
+title1 "Research Question: Find the station which has highest percentage of people walking to 
+station ?"
+;
  
 title2 "Rationale:This would help the public transport to introduce more 
-transportation facilities.";
-
-footnote1 "regression analysis between walkers to bart and number of riders from walnut creek station";
-*
-Methodology: 1.Find the station with highest number of walkers.Again do 
-a max of walkers
-             2.Find the station and infer based on results
+transportation facilities."
 ;
 
+footnote1 "24th St. Mission station has highest percentage of people 
+walking to the BART station"
+;
 
-proc sgplot data = barf_interlv;
+*
+Methodology: Use PROC MEANS to calculate the max value of walkers to BART
+;
 
-scatter x = WC  y = Walk;
+PROC MEANS 
+	DATA=barf_interlv NOPRINT MEAN;
+	ID name;
+	VAR Walk;
+	OUTPUT 
+    OUT =   TEMP_WALK_MEAN (DROP = _TYPE_ _FREQ_ name ); 
+RUN;
 
-run;
+PROC PRINT 
+	DATA=TEMP_WALK_MEAN NOOBS LABEL ;
+    WHERE _STAT_ = 'MAX';
+    LABEL _STAT_ = 'Maximum number of walkers to Bart station';
+    BY _STAT_;
+RUN;
+	
 title;
 footnote;
 
+
+	
