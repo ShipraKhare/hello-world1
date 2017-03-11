@@ -169,12 +169,8 @@ where the people are going for work.
 
 /*print top station with highest bart ridership for the reason of work.*/
 proc print data = barf_interlv_wrkplace_sort (obs=1) label; 
-    var 
-        Name
-    ;
-    label 
-        Name = "Top Station with work ridership"
-    ;
+     var   Name ;
+     label Name = "Top Station with work ridership" ;
 run;
 
 title;
@@ -190,12 +186,8 @@ footnote2 bcolor=antiquewhite
 
 /* Top 2 exit stations for workplace ridership  */
 proc print data = barf_interlv_SH (obs=2) label;
-    var 
-       Name
-    ;
-    label 
-       Name = " Top destinations for workplace"
-    ;
+     var   Name ;
+     label Name = " Top destinations for workplace" ;
 run;
 
 footnote;
