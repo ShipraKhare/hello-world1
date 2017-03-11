@@ -2,13 +2,15 @@
 **************** 80-character banner for column width reference ***************;
 * (set window width to banner width to calibrate line length to 80 characters *;
 *******************************************************************************;
-
+*IL: use white space to create paragraphs in comment blocks;
 *
 This file uses the following analytic dataset to address several research
 questions regarding ridership data on the Bay Area Rapid Transit system, BART.
+
 Dataset Name: barf, ho, barf_interlv, arrv created in external file
 STAT6250-01_w17-team-3_project2_data_preparation.sas, which is assumed to be
 in the same directory as this file.
+
 See included file for dataset properties
 ;
 
@@ -18,16 +20,16 @@ See included file for dataset properties
 
 %macro setup;
 %if
-	&SYSSCP. = WIN
+    &SYSSCP. = WIN
 %then
-	%do;
-		X "cd ""%substr(%sysget(SAS_EXECFILEPATH),1,%eval(%length(%sysget(SAS_EXECFILEPATH))-%length(%sysget(SAS_EXECFILENAME))))""";			
-		%include ".\&dataPrepFileName.";
-	%end;
+    %do;
+        X "cd ""%substr(%sysget(SAS_EXECFILEPATH),1,%eval(%length(%sysget(SAS_EXECFILEPATH))-%length(%sysget(SAS_EXECFILENAME))))""";           
+        %include ".\&dataPrepFileName.";
+    %end;
 %else
-	%do;
-		%include "~/&sasUEFilePrefix./&dataPrepFileName.";
-	%end;
+    %do;
+        %include "~/&sasUEFilePrefix./&dataPrepFileName.";
+    %end;
 %mend;
 %setup;
 
@@ -35,14 +37,16 @@ See included file for dataset properties
 * Research Question Correlation analysis between  percentage of riders
    with no vehicle and percentage of high frequency riders;
 *******************************************************************************;
-title1 "Research Question: For each station is there is a correlation between
-the percentage of riders with no vehicle and percentage of high frequency riders"
+*IL: don't wrap string literals;
+title1
+"Research Question: For each station is there is a correlation between the percentage of riders with no vehicle and percentage of high frequency riders"
 ;
 
 title2 "Rationale:This would help us to find if the percentage of riders with no
 vehicle are also part of high frequency riders"
 ;
-
+*IL: consider expanding analysis to include interpretation of p-values, context
+of results, and possible followup steps;
 footnote1 " The output shows a very weak positive correlation of 0.08 between percentage
 of riders with no vehicles taking bart and percentage of high frequency riders who
 are taking bart in each station"
@@ -53,10 +57,10 @@ Methodology: This uses a proc corr to find the correlation between percentage
 of riders with no vehicles and percentage of high frequency riders who
 are taking bart in each station"
 ;
-
+*IL: be consistent with capitalization;
 PROC CORR 
-	DATA = barf_interlv;
-	VAR NO_V HIGH_FREQ;
+    DATA = barf_interlv;
+    VAR NO_V HIGH_FREQ;
 RUN;
 
 title;
@@ -85,22 +89,25 @@ of low frequency rider"
 *
 Methodology: 1.PROC MEANS to find min and max values 
 ;
-
+*IL: consider using more indentation;
 PROC MEANS 
-	DATA=barf_interlv NOPRINT MEAN;
-	ID name;
-	VAR LOW_FREQ;
-	OUTPUT 
+        DATA=barf_interlv
+        NOPRINT
+        MEAN
+    ;
+    ID name;
+    VAR LOW_FREQ;
+    OUTPUT 
     OUT =  TEMP_MEAN_LOW_FREQ (DROP = _TYPE_ _FREQ_  NAME); 
 RUN;
 
 PROC PRINT 
-	DATA= TEMP_MEAN_LOW_FREQ NOOBS LABEL ;
+    DATA= TEMP_MEAN_LOW_FREQ NOOBS LABEL ;
     WHERE _STAT_ = 'MAX';
     LABEL _STAT_ = 'Maximum percentage of low frequency riders';
     BY _STAT_;
 RUN;
-	
+    
 title;
 footnote;
 
@@ -125,22 +132,22 @@ Methodology: Use PROC MEANS to calculate the max percentages of walkers to BART
 ;
 
 PROC MEANS 
-	DATA=barf_interlv NOPRINT MEAN;
-	ID name;
-	VAR Walk;
-	OUTPUT 
+    DATA=barf_interlv NOPRINT MEAN;
+    ID name;
+    VAR Walk;
+    OUTPUT 
     OUT =   TEMP_WALK_MEAN (DROP = _TYPE_ _FREQ_ name ); 
 RUN;
 
 PROC PRINT 
-	DATA=TEMP_WALK_MEAN NOOBS LABEL ;
+    DATA=TEMP_WALK_MEAN NOOBS LABEL ;
     WHERE _STAT_ = 'MAX';
     LABEL _STAT_ = 'Maximum percentage of walkers to Bart station';
     BY _STAT_;
 RUN;
-	
+    
 title;
 footnote;
 
 
-	
+    
