@@ -31,9 +31,14 @@ See included file for dataset properties
 %mend;
 %setup;
 
+*******************************************************************************;
+* Research Question Analysis Vehicles/Bart Rider;
+*******************************************************************************;
+title1 "Research Question: For each station is there is a correlation between
+the percentage of no vehicles riders and percentage of high ridership riders";
 
-
-
+title2 "Rationale:This would help us to find if the percentage of riders with no
+vehicle 
 *******************************************************************************;
 * Research Question Analysis Vehicles/Bart Rider;
 *******************************************************************************;
