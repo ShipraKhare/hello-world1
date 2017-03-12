@@ -52,36 +52,44 @@ analysis, percent change in risership.
 title1
 "Research Question: Does BART ridership significantly differ from normal weekday operations as compared to operations during an afternoon when the San Francisco Giants baseball team is having a downtown baseball game at ATT Park?"
 ;
+
 title2
 "This should help identify projections for economic opportunity for local vendors."
 ;
+
 proc print data=work.match_merge_records label noobs;
     label
         prcnt_chng = "Percent Change of BART Ridership During Baseball Game vs Normal Weekday:"
     ;
 run;
+
 title;
+
 proc print data=work.pop_avg_off (keep = no_game_ridership) label noobs;
     label
         no_game_ridership = "Normal BART Exits - Weekday"
     ;
 run;
+
 footnote1 bcolor=aquamarine bold underlin=1
 "This study measures percent change in arrival ridership from the three San Francisco financial district BART stations (i.e. Montgomery, Embarcadero, and Powell stations), an hour before the opening pitch.  Game started at 3:15 PM, BART station arrival time for the entire 2 o'clock hour."
 ;
+
 footnote2 bcolor=aquamarine bold underlin=1
 "Game day: September 30, 2016.  Control day: March 31, 2016"
 ;
+
 footnote3 bcolor=aquamarine bold underlin=1
 "As one can see this percent change in relation to the actual number of station exits during these two different days only accounts for 242 extra passengers on game day, as compared to any other weekday when nothing special is happening in San Francisco downtown."
 ;
+
 proc print data=work.pop_avg_game (keep = game_ridership) label noobs;
     label
         game_ridership = "Game Day BART Exits - Weekday"
     ;
 run;
-footnote;
 
+footnote;
 
 *******************************************************************************;
 * Research Question Analysis Starting Point                                    ;
@@ -94,39 +102,40 @@ with respect to morning and evening commute.
 ;
 
 title1
-"Research Question: How do the ridership loads compare between the morning commute and the evening commute with respect to both directions of travel within the Transbay tunnel?"
+"Research Question: How do ridership station exits compare (i.e. % change) for both Embarcadero and Montgomery Street stations with respect to morning and evening rush hours?"
 ;
+
 title2 
 "Rationale: As the Transbay tunnel is the single nexus within the BART system it is important to know travel loads to forecast general maintenance."
 ;
-title3 
-"Percent change from morning to evening commute, BART San Francisco financial district stations."
-;
+
 proc print data=work.m_rush (keep = exit tot_num) label noobs;
     label
         tot_num = "Total # of Morning Exits"
         exit = "Station"
     ;
 run;
+
 title;
+
 proc print data=work.pm_rush (keep = exit tot_num) label noobs;
     label
         tot_num = "Total # of Evening Exits"
         exit = "Station"
     ;
 run;
+
 footnote1 bcolor=aquamarine bold underlin=1
-"Aggregate entry and exit tracking to answer this question, both sides of the BART system -- San Francisco and East Bay."
-;
-footnote2 bcolor=aquamarine bold underlin=1
 "Morning rush hour: 7-9am. Evening rush hour: 4-6pm."
 ;
+
 proc print data=work.compare_am_pm_rush (keep = exit percent_change) label noobs;
     label
         percent_change = "% Change - Ridership"
         exit           = "Station"
     ;
 run;
+
 footnote;
 
 *******************************************************************************;
@@ -138,19 +147,19 @@ possible to compute the variance between these two stations.
 ;
 
 title1
-"What is the standard deviation of ridership between Civic Center Station and S.F. financial district during the morning weekday commute?"
-;
-title2 
-"Rationale: The beginnings of an analysis of variance."
-;
-title3 
-"Eventually would like to build probability distribution."
-;
-footnote1 bcolor=aquamarine bold underlin=1
-"This analysis shows the great variation between government employees headed to work at city hall and the private sector workers who head to their offices in S.F. financial district."
+"Research Question: provide a statistical 5-number summary for AM rush hour commute station exits between San Francisco financial district and San Francisco’s civic center; does the distribution appear to be normal?"
 ;
 
-proc means data=work.civic_center_am_rush;
+title2 
+"Rationale: Identifying the type of distribution when analyzing specific BART stations is the first step for any kind of further analysis, like determining passenger station exit probability."
+;
+
+footnote1 bcolor=aquamarine bold underlin=1
+"We see that the distribution is skewed to the left, indicating disproportionate station exits during AM rush hour BART traffic.  More passengers exit in the financial district in the morning as compared to the civic center."
+;
+
+proc means data=work.civic_center_am_rush mean min q1 median q3 max;
+   var hour num;
 run;
 
 title;
