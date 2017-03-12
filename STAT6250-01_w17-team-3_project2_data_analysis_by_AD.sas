@@ -3,6 +3,7 @@
 * (set window width to banner width to calibrate line length to 80 characters *;
 *******************************************************************************;
 
+
 *
 This file uses the following analytic dataset to address several research
 questions regarding ridership data on the Bay Area Rapid Transit system, BART.
@@ -35,15 +36,15 @@ See included file for dataset properties
 * Research Question Correlation analysis between  percentage of riders
    with no vehicle and percentage of high frequency riders;
 *******************************************************************************;
-title1 "Research Question: For each station is there is a correlation between
+TITLE1 "Research Question: For each station is there is a correlation between
 the percentage of riders with no vehicle and percentage of high frequency riders"
 ;
 
-title2 "Rationale:This would help us to find if the percentage of riders with no
+TITLE2 "Rationale:This would help us to find if the percentage of riders with no
 vehicle are also part of high frequency riders"
 ;
 
-footnote1 " The output shows a very weak positive correlation of 0.08 between percentage
+FOOTNOTE1 " The output shows a very weak positive correlation of 0.08 between percentage
 of riders with no vehicles taking bart and percentage of high frequency riders who
 are taking bart in each station"
 ;
