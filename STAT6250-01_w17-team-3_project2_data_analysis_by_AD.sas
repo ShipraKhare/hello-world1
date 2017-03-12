@@ -3,6 +3,7 @@
 * (set window width to banner width to calibrate line length to 80 characters *;
 *******************************************************************************;
 
+
 *
 This file uses the following analytic dataset to address several research
 questions regarding ridership data on the Bay Area Rapid Transit system, BART.
@@ -35,17 +36,15 @@ See included file for dataset properties
 * Research Question Correlation analysis between  percentage of riders
    with no vehicle and percentage of high frequency riders;
 *******************************************************************************;
-title1 "Research Question: For each station is there is a correlation between
+TITLE1 "Research Question: For each station is there is a correlation between
 the percentage of riders with no vehicle and percentage of high frequency riders"
 ;
 
-title2 "Rationale:This would help us to find if the percentage of riders with no
+TITLE2 "Rationale:This would help us to find if the percentage of riders with no
 vehicle are also part of high frequency riders"
 ;
 
-footnote1 " The output shows a very weak positive correlation of 0.08 between percentage
-of riders with no vehicles taking bart and percentage of high frequency riders who
-are taking bart in each station"
+FOOTNOTE1 " We cannot make any statistical conclusion based on the output  since the p-value for the results are really high"
 ;
 
 *
@@ -59,8 +58,8 @@ PROC CORR
 	VAR NO_V HIGH_FREQ;
 RUN;
 
-title;
-footnote;
+TITLE;
+FOOTNOTE;
 
 
 *******************************************************************************;
@@ -68,17 +67,17 @@ footnote;
    of low frequency riders;
 *******************************************************************************;
 
-title1 "Research Question: Find the stations which has the highest percentage 
+TITLE2 "Research Question: Find the stations which has the highest percentage 
 of low frequency riders ?"
 ;
 
-title2 "Rationale:This would help the business to see where there are less 
+TITLE2 "Rationale:This would help the business to see where there are less 
 frequent riders and see if something needs to be improved in that 
 station like make it clean, building elevators or other facilities 
 which would help us improve the station in general to increase the frequent riders."
 ;
 
-footnote1 "The above tables shows that Dublin/Pleasonton station has highest percentage 
+FOOTNOTE1 "The above tables shows that Dublin/Pleasonton station has highest percentage 
 of low frequency rider"
 ;
 
@@ -108,15 +107,15 @@ footnote;
 * Research Question highest percentage of walkers to BART;
 *******************************************************************************;
 
-title1 "Research Question: Find the station which has highest percentage of people walking to 
+TITLE1 "Research Question: Find the station which has highest percentage of people walking to 
 station ?"
 ;
  
-title2 "Rationale:This would help the public transport to introduce more 
+TITLE2 "Rationale:This would help the public transport to introduce more 
 transportation facilities."
 ;
 
-footnote1 "24th St. Mission station has highest percentage of people 
+FOOTNOTE1 "24th St. Mission station has highest percentage of people 
 walking to the BART station"
 ;
 
@@ -139,8 +138,9 @@ PROC PRINT
     BY _STAT_;
 RUN;
 	
-title;
-footnote;
+TITLE;
+FOOTNOTE;
+
 
 
 	
