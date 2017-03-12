@@ -44,9 +44,7 @@ TITLE2 "Rationale:This would help us to find if the percentage of riders with no
 vehicle are also part of high frequency riders"
 ;
 
-FOOTNOTE1 " The output shows a very weak positive correlation of 0.08 between percentage
-of riders with no vehicles taking bart and percentage of high frequency riders who
-are taking bart in each station"
+FOOTNOTE1 " We cannot make any statistical conclusion based on the output  since the p-value for the results are really high"
 ;
 
 *
