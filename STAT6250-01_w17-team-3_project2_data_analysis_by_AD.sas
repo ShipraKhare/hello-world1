@@ -59,8 +59,8 @@ PROC CORR
 	VAR NO_V HIGH_FREQ;
 RUN;
 
-title;
-footnote;
+TITLE;
+FOOTNOTE;
 
 
 *******************************************************************************;
@@ -68,17 +68,17 @@ footnote;
    of low frequency riders;
 *******************************************************************************;
 
-title1 "Research Question: Find the stations which has the highest percentage 
+TITLE2 "Research Question: Find the stations which has the highest percentage 
 of low frequency riders ?"
 ;
 
-title2 "Rationale:This would help the business to see where there are less 
+TITLE2 "Rationale:This would help the business to see where there are less 
 frequent riders and see if something needs to be improved in that 
 station like make it clean, building elevators or other facilities 
 which would help us improve the station in general to increase the frequent riders."
 ;
 
-footnote1 "The above tables shows that Dublin/Pleasonton station has highest percentage 
+FOOTNOTE1 "The above tables shows that Dublin/Pleasonton station has highest percentage 
 of low frequency rider"
 ;
 
@@ -108,15 +108,15 @@ footnote;
 * Research Question highest percentage of walkers to BART;
 *******************************************************************************;
 
-title1 "Research Question: Find the station which has highest percentage of people walking to 
+TITLE1 "Research Question: Find the station which has highest percentage of people walking to 
 station ?"
 ;
  
-title2 "Rationale:This would help the public transport to introduce more 
+TITLE2 "Rationale:This would help the public transport to introduce more 
 transportation facilities."
 ;
 
-footnote1 "24th St. Mission station has highest percentage of people 
+FOOTNOTE1 "24th St. Mission station has highest percentage of people 
 walking to the BART station"
 ;
 
@@ -139,8 +139,9 @@ PROC PRINT
     BY _STAT_;
 RUN;
 	
-title;
-footnote;
+TITLE;
+FOOTNOTE;
+
 
 
 	
